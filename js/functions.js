@@ -1,11 +1,10 @@
+//Функция 1
 const checkLength = function(string,length){
-  if(string.length<=length){
-    return true;
-  }else{
-    return false;
-  }
+  return string.length<=length;
 };
+checkLength('привет',6);
 
+//Функция 2
 const isPalindrome = function(string){
   string=string.toLowerCase().replaceAll(' ','');
   let reversedString = '';
@@ -14,7 +13,9 @@ const isPalindrome = function(string){
   }
   return string===reversedString;
 };
+isPalindrome('А роза упала на лапу Азора');
 
+//Функция 3
 const getNumber = function(string){
   string=string.toString().replaceAll(' ','');
   let result ='';
@@ -24,10 +25,10 @@ const getNumber = function(string){
       result+=number;
     }
   }
-  if(result==''){
+  if(result ===''){
     return 'NaN';
-  }else{
-    return result;
   }
+  return result;
 };
+getNumber('2023 год');
 
