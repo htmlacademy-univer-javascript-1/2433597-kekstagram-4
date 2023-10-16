@@ -29,22 +29,31 @@ const getRandomInteger = (a, b) => {
   return Math.floor(result);
 };
 
+
 function createUniqueIdFromRandomInteger (min, max) {
   const previousValues = [];
 
-  let currentValue = getRandomInteger(min, max);
-  while (previousValues.includes(currentValue)) {
-    currentValue = getRandomInteger(min, max);
-  }
-  previousValues.push(currentValue);
-  return currentValue;
+  return function () {
+    let currentValue = getRandomInteger(min, max);
+    if (previousValues.length >= (max - min + 1)) {
+      return null;
+    }
+    while (previousValues.includes(currentValue)) {
+      currentValue = getRandomInteger(min, max);
+    }
+    previousValues.push(currentValue);
+    return currentValue;
+  };
 }
 
+const createUniqueId = createUniqueIdFromRandomInteger (1,25);
+const createUniqueUrl = createUniqueIdFromRandomInteger(1,25);
+const createUniqueComments = createUniqueIdFromRandomInteger(1,1000);
 
 const getRandomArrayElement = (elements) => elements[getRandomInteger(0, elements.length - 1)];
 
 const createComments = () =>({
-  id:createUniqueIdFromRandomInteger(0,10000),
+  id:createUniqueComments(),
   avatar:`img/avatar-${getRandomInteger(1,6)}.svg`,
   message:getRandomArrayElement(MESSAGE),
   name:getRandomArrayElement(NAME),
@@ -53,8 +62,8 @@ const createComments = () =>({
 const similarComments = Array.from({length: 30}, createComments);
 
 const createPhoto =() => ({
-  id:createUniqueIdFromRandomInteger(1,25),
-  url:`photos/${createUniqueIdFromRandomInteger(1,25)}.jpg`,
+  id:createUniqueId(),
+  url:`photos/${createUniqueUrl()}.jpg`,
   description:getRandomArrayElement(DESCRIPTION),
   likes:getRandomInteger(15,200),
   comments:similarComments
@@ -67,3 +76,4 @@ const Test = function(test){
 };
 
 Test(similarPhotos);
+
