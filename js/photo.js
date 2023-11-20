@@ -1,7 +1,5 @@
-const data = [
-  { url: './img/logo-background-2.jpg', description: 'Mjdk', likes: 8, comments: 1 },
-  { url: './img/logo-background-1.jpg', description: 'Gcjnc', likes: 13, comments: 5 },
-];
+import {similarPhotos} from './data.js';
+
 const photoTemplate = document.querySelector('#picture').content;
 const createPicture = function(index){
   const newPhoto = photoTemplate.cloneNode(true);
@@ -23,4 +21,4 @@ const renderPhoto = function (photos) {
     photosBlock.append(photo);
   });
 };
-renderPhoto(data);
+renderPhoto(similarPhotos);
