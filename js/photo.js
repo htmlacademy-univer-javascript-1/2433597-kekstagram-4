@@ -1,5 +1,3 @@
-import {similarPhotos} from './data.js';
-
 const photoTemplate = document.querySelector('#picture').content;
 const createPicture = function(index){
   const newPhoto = photoTemplate.cloneNode(true);
@@ -9,16 +7,16 @@ const createPicture = function(index){
   photoImg.src =index.url;
   photoImg.alt = index.description;
   photoLikes.textContent = index.likes;
-  photoComments.textContent = index.comments;
+  photoComments.textContent = index.comments.length;
 
   return newPhoto;
 };
 
 const renderPhoto = function (photos) {
-  const photosBlock = document.querySelector('.picture');
+  const photosBlock = document.querySelector('.pictures');
   photos.forEach((element) => {
     const photo = createPicture(element);
-    photosBlock.append(photo);
+    photosBlock.appendChild(photo);
   });
 };
-renderPhoto(similarPhotos);
+export {renderPhoto};
