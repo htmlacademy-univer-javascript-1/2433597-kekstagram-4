@@ -32,3 +32,41 @@ const getNumber = function(string){
 };
 getNumber('2023 год');
 
+//Функция 4
+
+
+const getCorrect = function(origin){
+  const data = origin.split(':');
+  for(let i=0; i<data.length; i++){
+    if (data[i].length===2 && data[i][0]==='0'){
+      data[i][0]='';
+    }
+  }
+  return data;
+};
+
+const workDayFit = function(startWorkDay, endWorkDay, startMeeting, meetingDuration){
+  const workStart = getCorrect(startWorkDay);
+  const workEnd = getCorrect(endWorkDay);
+  const meetingStart = getCorrect(startMeeting);
+  const meeting = meetingStart;
+  if (workStart[0]<=meetingStart[0] && workStart[1]<= meetingStart[1]){
+    while(meetingDuration>=60){
+      meeting[0]++;
+      meetingDuration-=60;
+    }
+    if(meetingDuration!==0){
+      meeting[1]+=meetingDuration;
+    }
+    if(meeting[1]>=60){
+      meeting[0]++;
+      meeting[1]-=60;
+    }
+    return meeting<=workEnd;
+  }else{
+    return false;
+  }
+};
+
+workDayFit('08:00', '14:30', '14:00', 90);
+
