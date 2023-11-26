@@ -1,3 +1,5 @@
+import { render } from './big-picture.js';
+
 const photoTemplate = document.querySelector('#picture').content;
 const createPicture = function(index){
   const newPhoto = photoTemplate.cloneNode(true);
@@ -18,5 +20,6 @@ const renderPhoto = function (photos) {
     const photo = createPicture(element);
     photosBlock.appendChild(photo);
   });
+  render(photos);
 };
 export {renderPhoto};
