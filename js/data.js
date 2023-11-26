@@ -38,16 +38,15 @@ const createComments = () =>({
   name:getRandomArrayElement(NAME),
 });
 
-const similarComments = Array.from({length: 30}, createComments);
+const similarComments = () => Array.from({length: getRandomInteger(0,30)}, createComments);
 
 const createPhoto =() => ({
   id:createUniqueId(),
   url:`photos/${createUniqueUrl()}.jpg`,
   description:getRandomArrayElement(DESCRIPTION),
   likes:getRandomInteger(15,200),
-  comments:similarComments
+  comments:similarComments()
 });
 
 const similarPhotos = () => Array.from({length: 25}, createPhoto);
 export {similarPhotos};
-
