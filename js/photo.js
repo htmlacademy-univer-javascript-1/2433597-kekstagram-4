@@ -1,6 +1,7 @@
-import { render } from './big-picture.js';
+import { openBigPicture } from './big-picture.js';
 
-const photoTemplate = document.querySelector('#picture').content;
+const photoTemplate = document.querySelector('#picture').content.querySelector('.picture');
+const photosBlock = document.querySelector('.pictures');
 const createPicture = function(index){
   const newPhoto = photoTemplate.cloneNode(true);
   const photoImg = newPhoto.querySelector('.picture__img');
@@ -15,11 +16,13 @@ const createPicture = function(index){
 };
 
 const renderPhoto = function (photos) {
-  const photosBlock = document.querySelector('.pictures');
   photos.forEach((element) => {
     const photo = createPicture(element);
+    photo.addEventListener('click', (evt) => {
+      evt.preventDefault();
+      openBigPicture(element);
+    });
     photosBlock.appendChild(photo);
   });
-  render(photos);
 };
 export {renderPhoto};
