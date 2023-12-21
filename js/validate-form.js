@@ -12,6 +12,7 @@ const submitText = {
   IDLE:'Опубликовать',
   SUBMITTING:'Отправляю на сервер...',
 };
+const FILE_TYPES  = ['jpg', 'jpeg', 'png'];
 
 const form = document.querySelector('#upload-select-image');
 const imageInput = form.querySelector('#upload-file');
@@ -21,11 +22,16 @@ const hashtagField = form.querySelector('.text__hashtags');
 const commentField = form.querySelector('.text__description');
 const submitButton = form.querySelector('#upload-submit');
 
+const photoPreview = form.querySelector('.img-upload__preview img');
+const effectsPreview = form.querySelectorAll('.effects__preview');
+
 const pristine = new Pristine(form, {
   classTo:'img-upload__field-wrapper',
   errorTextParent:'img-upload__field-wrapper',
   errorTextClass:'img-upload__field-wrapper--error',
 });
+
+const isErrorMessageActive = () => Boolean(document.querySelector('.error'));
 
 const isTextFocused = () =>
   document.activeElement===hashtagField || document.activeElement===commentField;
@@ -35,13 +41,23 @@ const onClickClose = (evt) => {
   onCloseForm();
 };
 const onDocumentKeydown = (evt) => {
-  if(evt.key==='Escape' && !isTextFocused()){
+  if(evt.key==='Escape' && !isTextFocused() && !isErrorMessageActive()){
     evt.preventDefault();
     onCloseForm();
   }
 };
 
 const onImageInput = () => {
+  const file = imageInput.files[0];
+  const fileName = file.name.toLowerCase();
+  const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
+  if(matches) {
+    photoPreview.src=URL.createObjectURL(file);
+    effectsPreview.forEach((preview) => {
+      preview.style.backgroundImage = `url(${photoPreview.src})`;
+    });
+  }
+
   overlay.classList.remove('hidden');
   document.querySelector('body').classList.add('modal-open');
   closeButton.addEventListener('click', onClickClose );
