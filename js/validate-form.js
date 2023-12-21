@@ -8,6 +8,10 @@ const errorMessage = {
   NOT_UNIQUE:'Хэштеги должны быть уникальными',
   INVALID_PATTERN:'Неправильный хэштег'
 };
+const submitText = {
+  IDLE:'Опубликовать',
+  SUBMITTING:'Отправляю на сервер...',
+};
 
 const form = document.querySelector('#upload-select-image');
 const imageInput = form.querySelector('#upload-file');
@@ -15,6 +19,7 @@ const overlay = form.querySelector('.img-upload__overlay');
 const closeButton = form.querySelector('.img-upload__cancel');
 const hashtagField = form.querySelector('.text__hashtags');
 const commentField = form.querySelector('.text__description');
+const submitButton = form.querySelector('#upload-submit');
 
 const pristine = new Pristine(form, {
   classTo:'img-upload__field-wrapper',
@@ -67,9 +72,9 @@ const hasUniqueTags = (value) => {
   return lowerTags.length===new Set(lowerTags).size;
 };
 
-const onSubmit = (evt) => {
-  evt.preventDefault();
-  pristine.validate();
+const toggleSubmit = (isDisabled) => {
+  submitButton.disabled = isDisabled;
+  submitButton.textContent = isDisabled ? submitText.SUBMITTING:submitText.IDLE;
 };
 
 pristine.addValidator(
@@ -96,8 +101,22 @@ pristine.addValidator(
   true
 );
 
-form.addEventListener('submit', onSubmit);
+function setOnFormSubmit (cb) {
+  const onSubmit = async(evt) => {
+    evt.preventDefault();
+    const isValid = pristine.validate();
+    if(isValid){
+      toggleSubmit(true);
+      await cb(new FormData(form));
+      toggleSubmit();
+    }
+  };
+  form.addEventListener('submit', onSubmit);
+}
 
 imageInput.addEventListener('change',onImageInput);
 
 initializeEffect();
+
+export {setOnFormSubmit, onCloseForm};
+
