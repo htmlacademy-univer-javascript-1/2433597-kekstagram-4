@@ -1,3 +1,6 @@
+import { resetScale } from './scale.js';
+import { initializeEffect, resetEffect } from './effects.js';
+
 const MAX_HASHTAGS_COUNT = 5;
 const VALID_SYMBOLS = /^#[a-zа-яё0-9]{1,19}$/i;
 const errorMessage = {
@@ -42,6 +45,8 @@ const onImageInput = () => {
 
 function onCloseForm () {
   form.reset();
+  resetScale();
+  resetEffect();
   pristine.reset();
   overlay.classList.add('hidden');
   document.querySelector('body').classList.remove('modal-open');
@@ -95,3 +100,4 @@ form.addEventListener('submit', onSubmit);
 
 imageInput.addEventListener('change',onImageInput);
 
+initializeEffect();
