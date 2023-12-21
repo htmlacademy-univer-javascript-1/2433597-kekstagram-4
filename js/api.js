@@ -1,5 +1,6 @@
 import { renderPhoto } from './photo.js';
-import { showAlert } from './util.js';
+import { showAlert, debounce } from './util.js';
+import { getFilteredPhotos, initializeFilters } from './filters.js';
 
 const BASE_URL = 'https://29.javascript.pages.academy/kekstagram';
 const ROUTE = {
@@ -33,7 +34,9 @@ const sendData = (body) => load(ROUTE.SEND_DATA, ERROR_MESSAGE.SEND_DATA, METHOD
 const setDataFromServer = () => {
   getData()
     .then((photos) => {
-      renderPhoto(photos);
+      const debouncedPhotosList = debounce(renderPhoto);
+      initializeFilters(photos, debouncedPhotosList);
+      renderPhoto(getFilteredPhotos());
     })
     .catch((error) => {
       showAlert(error.message);

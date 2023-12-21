@@ -2,6 +2,7 @@ import './scale.js';
 import { sendData, setDataFromServer } from './api.js';
 import { showErrorMessage, showSuccessMessage } from './messages.js';
 import { setOnFormSubmit, onCloseForm } from './validate-form.js';
+import './filters.js';
 
 setOnFormSubmit(async (data) => {
   try {
