@@ -16,6 +16,7 @@ const createPicture = function(index){
 };
 
 const renderPhoto = function (photos) {
+  photosBlock.querySelectorAll('.picture').forEach((photo) => photo.remove());
   photos.forEach((element) => {
     const photo = createPicture(element);
     photo.addEventListener('click', (evt) => {
