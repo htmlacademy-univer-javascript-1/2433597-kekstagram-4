@@ -1,4 +1,4 @@
-const effects = {
+const Effects = {
   DEFAULT: 'none',
   CHROME: 'chrome',
   SEPIA: 'sepia',
@@ -8,55 +8,55 @@ const effects = {
 };
 
 const effectToFilter = {
-  [effects.CHROME]:{
+  [Effects.CHROME]:{
     style: 'grayscale',
     unit: '',
   },
-  [effects.SEPIA]:{
+  [Effects.SEPIA]:{
     style: 'sepia',
     unit: '',
   },
-  [effects.MARVIN]:{
+  [Effects.MARVIN]:{
     style: 'invert',
     unit: '%',
   },
-  [effects.PHOBOS]:{
+  [Effects.PHOBOS]:{
     style: 'blur',
     unit: 'px',
   },
-  [effects.HEAT]:{
+  [Effects.HEAT]:{
     style: 'brightness',
     unit: '',
   },
 };
 
 const sliderOptions = {
-  [effects.DEFAULT]: {
+  [Effects.DEFAULT]: {
     min: 0,
     max: 100,
     step: 1,
   },
-  [effects.CHROME]: {
+  [Effects.CHROME]: {
     min: 0,
     max: 1,
     step: 0.1,
   },
-  [effects.SEPIA]: {
+  [Effects.SEPIA]: {
     min: 0,
     max: 1,
     step: 0.1,
   },
-  [effects.MARVIN]: {
+  [Effects.MARVIN]: {
     min: 0,
     max: 100,
     step: 1,
   },
-  [effects.PHOBOS]: {
+  [Effects.PHOBOS]: {
     min: 0,
     max: 3,
     step: 0.1,
   },
-  [effects.HEAT]: {
+  [Effects.HEAT]: {
     min: 1,
     max: 3,
     step: 0.1,
@@ -70,10 +70,10 @@ const sliderElement = modal.querySelector('.effect-level__slider');
 const sliderContainer = modal.querySelector('.img-upload__effect-level');
 const effectLevelElement = modal.querySelector('.effect-level__value');
 
-let currentEffect = effects.DEFAULT;
+let currentEffect = Effects.DEFAULT;
 
 function setPictureStyle () {
-  if(currentEffect===effects.DEFAULT){
+  if(currentEffect===Effects.DEFAULT){
     image.style.filter = null;
     return;
   }
@@ -108,7 +108,7 @@ const destroySlider = () => {
 const setSlider = () => {
   destroySlider();
   hideSlider();
-  if(currentEffect!==effects.DEFAULT) {
+  if(currentEffect!==Effects.DEFAULT) {
     createSlider(sliderOptions[currentEffect]);
     showSlider();
   }
@@ -120,7 +120,7 @@ function setEffect (effect) {
 }
 
 function resetEffect () {
-  setEffect(effects.DEFAULT);
+  setEffect(Effects.DEFAULT);
 }
 
 const onEffectChange = (evt) => {
